@@ -173,8 +173,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return Container(
       decoration: BoxDecoration(
-        // Dark mode needs a distinct field color so it doesn't blend into the background
-        color: isDark ? const Color(0xFF1B3A57) : Colors.white,
+        // Updated: Now using the same light color as your other screens
+        color: isDark ? const Color(0xFFF4F6F8) : Colors.white,
         borderRadius: BorderRadius.circular(30),
         boxShadow: isDark 
           ? [] 
@@ -183,15 +183,16 @@ class _LoginScreenState extends State<LoginScreen> {
       child: TextFormField(
         controller: controller,
         obscureText: obscureText,
-        style: TextStyle(
-          color: isDark ? Colors.white : const Color(0xFF0F2A44), 
+        // Since the box is light, the text must be dark even in dark mode
+        style: const TextStyle(
+          color: Color(0xFF0F2A44), 
           fontSize: 16
         ),
         decoration: InputDecoration(
           hintText: hintText,
           contentPadding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
           border: InputBorder.none,
-          hintStyle: TextStyle(color: isDark ? Colors.white54 : Colors.grey),
+          hintStyle: const TextStyle(color: Colors.grey),
         ),
       ),
     );
