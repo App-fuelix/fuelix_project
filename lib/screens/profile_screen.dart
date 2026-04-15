@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../main.dart'; // Import important pour themeNotifier
+import '../main.dart'; // Assurez-vous que le chemin vers main.dart est correct
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -13,7 +13,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Détecte si le mode sombre est actif (soit par le système, soit par le bouton)
     final bool isDark = Theme.of(context).brightness == Brightness.dark;
+    
     final Color primaryColor = const Color(0xFFF2A945);
     final Color navyColor = const Color(0xFF0F2A44);
     final Color textColor = isDark ? Colors.white : navyColor;
@@ -50,7 +52,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             const SizedBox(height: 25),
 
-            // User Card
+            // User Card (Reste blanc pour le contraste "Pop" de la maquette)
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(25),
@@ -58,7 +60,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
-                  BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 15, offset: const Offset(0, 5))
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05), 
+                    blurRadius: 15, 
+                    offset: const Offset(0, 5)
+                  )
                 ],
               ),
               child: Column(
@@ -71,7 +77,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const SizedBox(height: 15),
                   const Text(
                     "Freeoui",
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xFF0F2A44)),
+                    style: TextStyle(
+                      fontSize: 22, 
+                      fontWeight: FontWeight.bold, 
+                      color: Color(0xFF0F2A44)
+                    ),
                   ),
                   const Text("freeoui@exemple.com", style: TextStyle(color: Colors.grey)),
                   const Text("+216 55 123 456", style: TextStyle(color: Colors.grey)),
@@ -99,10 +109,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               icon: Icons.wb_sunny_outlined,
               title: "Appearance",
               isDark: isDark,
-              primaryColor: primaryColor, // Passé en paramètre ici
+              primaryColor: primaryColor,
               trailing: Switch(
                 value: isDark,
                 onChanged: (val) {
+                  // Change le thème globalement
                   themeNotifier.value = val ? ThemeMode.dark : ThemeMode.light;
                 },
                 activeColor: primaryColor,
@@ -113,7 +124,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               icon: Icons.notifications_none_outlined,
               title: "Notifications",
               isDark: isDark,
-              primaryColor: primaryColor, // Passé en paramètre ici
+              primaryColor: primaryColor,
               trailing: Switch(
                 value: _notificationsEnabled,
                 onChanged: (val) => setState(() => _notificationsEnabled = val),
@@ -125,7 +136,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               icon: Icons.security_outlined,
               title: "Security",
               isDark: isDark,
-              primaryColor: primaryColor, // Passé en paramètre ici
+              primaryColor: primaryColor,
               onTap: () => Navigator.pushNamed(context, '/security'),
               trailing: const Icon(Icons.arrow_forward_ios, size: 16, color: Colors.grey),
             ),
@@ -157,12 +168,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  // --- WIDGETS CORRIGÉ (primaryColor ajouté en paramètre) ---
   Widget _buildSettingItem({
     required IconData icon, 
     required String title, 
     required bool isDark, 
-    required Color primaryColor, // Correction : On le demande ici
+    required Color primaryColor,
     required Widget trailing,
     VoidCallback? onTap,
   }) {

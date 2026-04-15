@@ -7,7 +7,7 @@ import 'screens/login_screen.dart';
 import 'screens/signup_screen.dart';
 import 'screens/forgot_password_screen.dart';
 
-// Notificateur global pour le thème
+// On initialise avec ThemeMode.system pour qu'il suive le téléphone par défaut
 final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.system);
 
 void main() => runApp(const FuelixApp());
@@ -23,6 +23,8 @@ class FuelixApp extends StatelessWidget {
         return MaterialApp(
           title: 'FueliX',
           debugShowCheckedModeBanner: false,
+          
+          // Cette ligne est la clé : elle écoute le notifier
           themeMode: currentMode, 
 
           theme: ThemeData(
