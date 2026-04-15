@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-
-// Import your unified screens here (we will create/fix these next)
-import 'screens/splash_screen.dart';
+import 'screens/home_screen.dart';
+import 'screens/profile_screen.dart';
+import 'screens/edit_profile_screen.dart';
+import 'screens/security_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/signup_screen.dart';
 import 'screens/forgot_password_screen.dart';
-import 'screens/home_screen.dart';
+
+// Notificateur global pour le thème
+final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.system);
 
 void main() => runApp(const FuelixApp());
 
@@ -14,55 +17,46 @@ class FuelixApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'FueliX',
-      debugShowCheckedModeBanner: false,
-      
-      // Control center for the app's appearance
-      themeMode: ThemeMode.system, 
+    return ValueListenableBuilder<ThemeMode>(
+      valueListenable: themeNotifier,
+      builder: (_, ThemeMode currentMode, __) {
+        return MaterialApp(
+          title: 'FueliX',
+          debugShowCheckedModeBanner: false,
+          themeMode: currentMode, 
 
-      // LIGHT THEME CONFIGURATION
-      theme: ThemeData(
-        useMaterial3: true,
-        brightness: Brightness.light,
-        scaffoldBackgroundColor: const Color(0xFFF4F6F8),
-        primaryColor: const Color(0xFF2196F3), // Example Brand Color
-        colorScheme: const ColorScheme.light(
-          primary: Color(0xFF2196F3),
-          surface: Colors.white,
-        ),
-        // This ensures all text defaults to black in light mode
-        textTheme: const TextTheme(
-          bodyLarge: TextStyle(color: Colors.black),
-        ),
-      ),
-      
-      // DARK THEME CONFIGURATION
-      darkTheme: ThemeData(
-        useMaterial3: true,
-        brightness: Brightness.dark,
-        scaffoldBackgroundColor: const Color(0xFF0F2A44),
-        primaryColor: const Color(0xFF64B5F6),
-        colorScheme: const ColorScheme.dark(
-          primary: Color(0xFF64B5F6),
-          surface: Color(0xFF1B3A57),
-        ),
-        // This ensures all text defaults to white in dark mode
-        textTheme: const TextTheme(
-          bodyLarge: TextStyle(color: Colors.white),
-        ),
-      ),
+          theme: ThemeData(
+            useMaterial3: true,
+            brightness: Brightness.light,
+            scaffoldBackgroundColor: const Color(0xFFF4F6F8),
+            colorScheme: const ColorScheme.light(
+              primary: Color(0xFFF2A945),
+              surface: Colors.white,
+            ),
+          ),
+          
+          darkTheme: ThemeData(
+            useMaterial3: true,
+            brightness: Brightness.dark,
+            scaffoldBackgroundColor: const Color(0xFF0F2A44),
+            colorScheme: const ColorScheme.dark(
+              primary: Color(0xFFF2A945),
+              surface: Color(0xFF1B3B5A),
+            ),
+          ),
 
-      // Start with the single Splash Screen
-      home: const DashboardScreen(),
-      //home: const SplashScreen(),
+          home: const DashboardScreen(),
 
-      // Unified Routes
-      routes: {
-        '/login': (context) => const LoginScreen(),
-        '/signup': (context) => const SignUpScreen(),
-        '/forgot-password': (context) => const ForgotPasswordScreen(),
-        '/home': (context) => const DashboardScreen(),
+          routes: {
+            '/login': (context) => const LoginScreen(),
+            '/signup': (context) => const SignUpScreen(),
+            '/forgot-password': (context) => const ForgotPasswordScreen(),
+            '/home': (context) => const DashboardScreen(),
+            '/profile': (context) => const ProfileScreen(),
+            '/edit-profile': (context) => const EditProfileScreen(),
+            '/security': (context) => const SecurityScreen(),
+          },
+        );
       },
     );
   }
